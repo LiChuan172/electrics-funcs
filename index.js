@@ -9,6 +9,12 @@ const FS = 1500
 const toDegree = (radian) => (radian * 180) / PI
 const angleFromSides = (a, b, c) =>
   acos((b * b + c * c - a * a) / (2 * b * c))
+const zip3With = (f, dataA, dataB, dataC) =>
+  zipWith(
+    ([a, b], c) => f(a, b, c),
+    zip(dataA, dataB),
+    dataC
+  )
 
 export function getPhases(Ia, Ib, Ic) {
   const alph1 = angleFromSides(Ib, Ia, Ic)
@@ -34,7 +40,7 @@ export function getRMS(sample) {
   return rootMeanSquare(sample)
 }
 
-export function getPeak(sample) {
+export function getAmplitude(sample) {
   const rms = getRMS(sample)
   return toPeak(rms)
 }
@@ -51,21 +57,13 @@ export function getCurrentFunc50Hz(amplitude, ph) {
   return getCurrentFunc(amplitude, 50, ph)
 }
 
-function getItemPark(a, b, c) {
-  return [
-    (2.0 / 3.0) * (a - 0.5 * b - 0.5 * c),
-    (2.0 / 3.0) *
-      ((sqrt(3.0) / 2.0) * b - (sqrt(3.0) / 2.0) * c),
-  ]
-}
-
 export function getPark(dataA, dataB, dataC) {
   const N = min(
     [dataA, dataB, dataC].map((data) => data.length)
   )
 
   const amplitudes = [dataA, dataB, dataC].map((data) =>
-    getPeak(data.slice(0, N))
+    getAmplitude(data.slice(0, N))
   )
 
   const [funcA, funcB, funcC] = zipWith(
@@ -74,19 +72,24 @@ export function getPark(dataA, dataB, dataC) {
     [0, ...getPhases(...amplitudes)]
   )
 
-  const ts = Array(N)
-    .fill(0)
-    .map((_, index) => index / FS)
-
   const [dataASmp, dataBSmp, dataCSmp] = [
     funcA,
     funcB,
     funcC,
-  ].map(func => ts.map((t) => func(t)))
+  ].map((func) =>
+    Array(N)
+      .fill(0)
+      .map((_, index) => func(index / FS))
+  )
 
-  return zipWith(
-    ([a, b], c) => [a, b, c],
-    zip(dataASmp, dataBSmp),
+  return zip3With(
+    (a, b, c) => [
+      (2.0 / 3.0) * (a - 0.5 * b - 0.5 * c),
+      (2.0 / 3.0) *
+        ((sqrt(3.0) / 2.0) * b - (sqrt(3.0) / 2.0) * c),
+    ],
+    dataASmp,
+    dataBSmp,
     dataCSmp
-  ).map(item => getItemPark(...item))
+  )
 }
