@@ -13,10 +13,15 @@
   "keywords": [
     "electrics"
   ],
+  "type": "module",
   "author": "LI Chuan",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/LiChuan172/electrics-funcs/issues"
   },
-  "homepage": "https://github.com/LiChuan172/electrics-funcs#readme"
+  "homepage": "https://github.com/LiChuan172/electrics-funcs#readme",
+  "dependencies": {
+    "ramda": "^0.27.1",
+    "simple-statistics": "^7.3.0"
+  }
 }
