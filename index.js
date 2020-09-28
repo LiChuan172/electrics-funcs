@@ -24,7 +24,10 @@ export function getPhases(Ia, Ib, Ic) {
   return [ph1, ph2]
 }
 
-export function getPhaseDifs(Ia, Ib, Ic) {
+export function getPhaseDifs(dataA, dataB, dataC) {
+  const [Ia, Ib, Ic] = [dataA, dataB, dataC].map((data) =>
+    getRMS(data)
+  )
   const [ph1, ph2] = getPhases(Ia, Ib, Ic)
   const Q1 = toDegree(ph1)
   const Q2 = toDegree(ph2)

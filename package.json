@@ -1,6 +1,6 @@
 {
   "name": "electrics-funcs",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "some electrics functions",
   "main": "index.js",
   "scripts": {
