@@ -1,0 +1,22 @@
+{
+  "name": "electrics-funcs",
+  "version": "1.0.0",
+  "description": "some electrics functions",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LiChuan172/electrics-funcs.git"
+  },
+  "keywords": [
+    "electrics"
+  ],
+  "author": "LI Chuan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LiChuan172/electrics-funcs/issues"
+  },
+  "homepage": "https://github.com/LiChuan172/electrics-funcs#readme"
+}
