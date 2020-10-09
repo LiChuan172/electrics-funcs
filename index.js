@@ -60,7 +60,7 @@ export function getCurrentFunc50Hz(amplitude, ph) {
   return getCurrentFunc(amplitude, 50, ph)
 }
 
-export function getPark(dataA, dataB, dataC) {
+export function getPark(dataA, dataB, dataC, fs) {
   const N = min(
     [dataA, dataB, dataC].map((data) => data.length)
   )
@@ -82,7 +82,7 @@ export function getPark(dataA, dataB, dataC) {
   ].map((func) =>
     Array(N)
       .fill(0)
-      .map((_, index) => func(index / FS))
+      .map((_, index) => func(index / fs))
   )
 
   return zip3With(
