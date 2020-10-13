@@ -40,7 +40,12 @@ export function getPhaseDifs(dataA, dataB, dataC) {
 }
 
 export function getRMS(sample) {
-  return rootMeanSquare(sample)
+  const filteredSample = sample.filter(s => { 
+    if (typeof s !== "Number") { return false }
+    if (isNaN(s)) { return false }
+    return true
+  })
+  return rootMeanSquare(filteredSample)
 }
 
 export function getAmplitude(sample) {
