@@ -1,5 +1,6 @@
 import { rootMeanSquare, min } from "simple-statistics"
-import { zipWith, zip } from "ramda"
+import r from "ramda"
+const { zipWith, zip } = r
 
 const { acos, PI, sqrt, sin } = Math
 
@@ -40,9 +41,13 @@ export function getPhaseDifs(dataA, dataB, dataC) {
 }
 
 export function getRMS(sample) {
-  const filteredSample = sample.filter(s => { 
-    if (typeof s !== "number") { return false }
-    if (isNaN(s)) { return false }
+  const filteredSample = sample.filter((s) => {
+    if (typeof s !== "number") {
+      return false
+    }
+    if (isNaN(s)) {
+      return false
+    }
     return true
   })
   return rootMeanSquare(filteredSample)
